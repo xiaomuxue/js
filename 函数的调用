@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>函数的调用</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+   //第一种方式正常声明一个函数
+    function add(x,y){            //直接声明就好了，add就是一个函数
+	  return x+y;
+	}
+	alert( add( 2,4));
+	
+	
+     //以第二种方式来声明一个函数
+	 //   匿名函数：因为它没有名字
+	 //  add是一个变量名
+	 //将一个段匿名函数的代码赋值给了  add  变量
+	 var add=function( x,y){
+	   return x+y;
+	}
+	alert( add);
+	//也可在变量名后面加一个   （）  来调用这个函数
+	alert( add(2,4));
+  </script>
+</body>
+</html>
