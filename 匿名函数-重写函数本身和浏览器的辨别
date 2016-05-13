@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>匿名函数-重写函数自身</title>
+</head>
+
+<body>
+   <pre>
+    区别浏览器的方法有：
+	          IE支持创建Active控件的特性，就是ActiveXObject函数，只要判断window对象是否存在ActiveXObject函数，存在说明是IE浏览器。
+              Firefox的DOM元素有一个getBoxObjectFor函数，用来获取该DOM元素的位置和大小，（IE对应的是getBoundingClientRect函数）。getBoxObjectFor函数是火狐浏览器特有的特性，判断它即可判断出当前浏览器是否是firefox。
+              Opera有它自己的专门标志，就是window.opera属性。
+              Safari有一个特有属性：openDatabase函数，可判断当前浏览器是否是Safari浏览器。
+              Chrome和Firefox都有一个MessageEvent函数，但是Chrome函数没有火狐浏览器的特有属性getBoxObjectFor函数，因此MessageEvent函数可以用来判断是否是Chrome浏览器。
+        
+        当我们在做判断时，最好把用户最多的放在最前面判断，这样可以提高效率。
+        
+        var Sys = {};
+        var ua = navigator.userAgent.toLowerCase();
+        var s;
+         (s = ua.match(/msie ([\d.]+)/)) ? Sys.ie = s[1] :
+         (s = ua.match(/firefox\/([\d.]+)/)) ? Sys.firefox = s[1] :
+         (s = ua.match(/chrome\/([\d.]+)/)) ? Sys.chrome = s[1] :
+         (s = ua.match(/opera.([\d.]+)/)) ? Sys.opera = s[1] :
+         (s = ua.match(/version\/([\d.]+).*safari/)) ? Sys.safari = s[1] : 0;
+
+        //以下进行测试
+        if (Sys.ie) document.write('IE: ' + Sys.ie);
+        if (Sys.firefox) document.write('Firefox: ' + Sys.firefox);
+        if (Sys.chrome) document.write('Chrome: ' + Sys.chrome);
+        if (Sys.opera) document.write('Opera: ' + Sys.opera);
+        if (Sys.safari) document.write('Safari: ' + Sys.safari);
+    </pre>
+    
+    
+   <script typpe="text/javascript">
+      /* function a(){
+	      document.write("hello <br/>");
+		  a=function(){      //此处说明把自己更改了
+		   document.write("bye <br/>");  
+		}
+	  }
+	  a();    //第一次执行...
+	  a();    //第二次执行已经把a的原值改了，改为了bye;
+	  */
+	  
+	  //以上代码相当于：
+	  
+	  function a(){
+	    document.write("bye <br/>");
+	}
+	a();
+	  
+	  function showTable(){
+	    // document.write("检测浏览器<br/>");
+		 var r=2;
+		 if( window.ActiveXObject){
+		    r=1;     //window对象存在ActiveXObject函数，判断是否支持Active控件，支持则为IE浏览器
+		}
+		 if( r==1 ){
+		    showTable=function(){
+		      // document.write("以ie的特性来显示table<br/>");
+			  //ie用table形式显示
+			  var arr=arguments[0];
+			  document.write("<table border='1' width='800px'>");
+			  for(var i=0;i<arr.length;i++){
+			     document.write("<tr>");
+				 document.write("<td>"+arr[i].name+"</td><td>"+arr[i].age+"</td>");
+				 document.write("</tr>");
+			  }
+			  document.write("</table>");
+		   }
+		}else if( r==2 ){
+	        showTable=function(){
+		       //document.write("以ff的特性来显示table<br/>");
+			   //ff用ul形式来显示
+			   var arr=arguments[0];
+			    document.write("<ul>");
+				for(var i=0;i<arr.length;i++){
+			       document.write("<li>");
+				   document.write(arr[i].name+"  "+arr[i].age);
+				   document.write("</li>");
+				}
+				document.write("</ul>");
+			}
+		 }
+	}
+	
+	 function showTree(){
+	    // document.write("检测浏览器<br/>");
+		 var r=2;        //此处可以更改，当改为2时，表示以火狐的浏览器为标准来显示，改为1时，表示以IE浏览器为标准来显示
+		  if( window.ActiveXObject){
+		    r=1;
+		}      //window.ActiveXobject:ie浏览器特有特性，存在说明是ie，不存在说明是其它的浏览器，这一小段if代码就是用来检测浏览器的。
+		 if( r==1 ){
+		    showTree=function(){
+		      // document.write("以ie的特性来显示tree<br/>");
+			  var arr=arguments[0];
+			  document.write("<table border='1' width='800px'>");
+			  for(var i=0;i<arr.length;i++){
+			     document.write("<tr>");
+				 document.write("<td>"+arr[i].name+"</td><td>"+arr[i].age+"</td>");
+				 document.write("</tr>");
+			  }
+			  document.write("</table>");
+		   }
+		}else if( r==2 ){
+	        showTree=function(){
+		      // document.write("以ff的特性来显示tree<br/>");
+			   var arr=arguments[0];
+			    document.write("<ul>");
+				for(var i=0;i<arr.length;i++){
+			       document.write("<li>");
+				   document.write(arr[i].name+"  "+arr[i].age);
+				   document.write("</li>");
+				}
+				document.write("</ul>");
+			}
+		 }
+	}
+	
+  //在自调用的代码一次性运行一下这些函数，这样这些函数就识别出浏览器的类型，并将自身重写
+	(function(){
+	   showTable();
+	   showTree();
+	})();    //这一段可以用来确定是使用的哪种浏览器            
+	
+	/*showTable();     //以我自己要的方式调用出来
+	showTree();*/
+	
+	var arr=[{name:"smith",age:20},{name:"tom",age:22}];
+	showTable( arr);
+
+   </script>
+</body>
+</html>
