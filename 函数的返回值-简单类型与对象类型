@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>函数的返回值-简单类型与对象类型</title>
+</head>
+
+<body>
+
+  <pre>
+     面试时可能被问到：不定参数的实现方式     可以使用arguments实现
+     
+     arguments 是是JavaScript里的一个内置对象，它是一个很重要的对象，必须对它的使用非常熟悉。
+     所有的函数都有属于自己的一个arguments对象，它包括了函所要调用的参数。
+     通过使用argument对象让函数能够调用数量不定的参数，有非常灵活的属性。
+     arguments对象不是一个真正的javascript数组，但还是可把它转换成标准的数据。
+     可通过预置的arguments对象创建函数。
+     Arguments.callee包括了一个函数的引用去创建一个argument对象，Arguments.callee方法能让一个匿名函数很方便的指向本身。
+  </pre>
+
+   <script type="text/javascript">
+      function add(){
+	     var sum=0;     
+		 //arguments对象让函数能够调用数量不定的参数，非常灵活
+		 for(var i=0;i<arguments.length;i++){
+		   sum+=arguments[i];
+		}
+		return sum;
+	 }
+	 
+	 document.write( add(1,2,3)+"<br/>");      //简单类型，返回add的和
+	 
+	 //此函数没有设计返回值，则undefined
+	 function show(){
+	   var x=5;
+	}
+	document.write( show() +"<br/>" );
+	 
+	 //要求： 计算 返回的值：{a:xx  b:xxx   result:xxx}
+	 
+	 function add1(vala,valb){
+	   var sum=vala+valb;
+	   return {result:sum, a:vala, b:valb};     //return {};相当于返回一个数组，因此可以同时返回多个值
+	}
+	
+	var r=add1(1,2);        //定义多个数，求和
+	document.write( r.a+"+"+r.b+"="+r.result+"<br/>");   //把a和b都返回且返回它的值
+	
+	
+	function add2(){
+	   var sum=0;
+	   var arr=new Array();      //定义一个新的数组
+	   for(var i=0;i<arguments.length;i++){
+	      sum+=arguments[i];       //求多个数的值
+		  arr[i]=arguments[i];     //把数组里面原有的值赋给新的数组
+	   }
+	   return {result:sum, origin: arr};   //第一个是结果；第二个是原始值
+	}
+	var r2=add2(1,2,3,4,5);
+	
+	var str=r2.origin.join("+");     //要是没有这一句，就是直接输出数组，添加上这一句，就是把数组中的值一个个输出来，中间加上+号  
+	document.write(r2.result+"--"+r2.origin+"<br/>");
+	document.write( str+"="+r2.result );   //输出值和结果
+   </script>
+</body>
+</html>
