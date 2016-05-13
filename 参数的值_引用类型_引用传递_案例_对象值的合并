@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>参数的值_引用类型_引用传递_案例_对象值的合并</title>
+</head>
+
+<body>
+
+<script type="text/javascript">
+	
+	function showBookInfo(   book ){
+	    var defaultvalue={
+			name:'未知书名',
+			pages:0,
+			author:'zy'
+		};
+		book=mergeObject(   defaultvalue, book );  //调用 mergeObject函数，完成将defaultvalue和book值合并到一起过程
+		document.write(   "书名:"+book.name+"  页数:"+book.pages+" 作者:"+book.author  +"<br />" );	
+	}
+	//合并两个对象的值，如果 realvalue中没有这个属性，则采用defaultvalue中的值，有，则使用realvalue中的值.
+	//返回一个对象
+	function mergeObject( defaultvalue,  realvalue){
+			if(   realvalue  &&   typeof realvalue=='object'   ){
+				for( var key in realvalue ){  //  name     pages
+					defaultvalue[key]=realvalue[key]||defaultvalue[key];	   //    realvalue['name']  => 'java深入钱出'     realvalue['pages']=> 500
+					/*if(   realvalue[key] ){
+						defaultvalue[key]= realvalue[key];	
+					}else{
+						defaultvalue[key]=defaultvalue[key];	
+					}*/      //这一段等同于上面的defaultvalue[key]=realvalue[key]||defaultvalue[key];这种写法十分的简洁，减少了代码。
+					
+				}
+			}
+			return defaultvalue;
+	}
+	
+	var book1={  name:'java深入钱出', pages:500};
+	showBookInfo(   book1 );
+	
+	var book2={name:'js深入钱出'};
+	showBookInfo(  book2  );
+	
+	
+	function showStuInfo(   stu ){
+	    var defaultvalue={
+			name:'未知姓名',
+			age:18,
+			gender:1
+		};
+		stu=mergeObject(   defaultvalue, stu );  //调用 mergeObject函数，完成将defaultvalue和book值合并到一起过程
+		document.write(   "姓名:"+stu.name+"  年龄:"+stu.age+" 性别:"+  (stu.gender==1?'男':'女')  +"<br />" );	
+	}     //stu.gender==1?'男'：'女'  表示不是男便是女
+	
+	var stu1={ name:'张嘎'};      //表示可输出的有名字，其它是默认值
+	showStuInfo( stu1 );
+	
+</script>
+
+</body>
+</html>
