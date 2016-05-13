@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>函数也是一种数据</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+      var x=1;
+	  var y=x;
+	  
+	  //因为函数就是一段代码，所以这段代码也可以赋值给别的变量
+	  var sum=function(a,b){
+	     return a+b;
+	  }
+	  var add=sum;
+	  alert( add(1,2));
+	  
+	  alert( typeof sum);    //使用typeof判断类型     function函数
+	  alert( typeof add);
+   </script>
+</body>
+</html>
