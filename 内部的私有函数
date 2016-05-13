@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>内部的私有函数</title>
+</head>
+
+<body>
+   <script type="text/javascript">
+      function show(){
+	     //show函数的子函数
+		 function son(){   //子函数用来包装一些特殊算法
+		    document.write( "hello" +"<br/>");    //子函数相当于局部变量，只有show()函数可以调用，外面无法调用到
+		}
+		son();     //son()子函数只能在此被调用
+	 }
+	 
+	 //在show()的外面是不能调用到   son();子函数
+	 //son();    //ReferenceError: son is not defined
+	 
+	 //通过调用父函数，通过父函数来调用子函数
+	 show();            //hello
+	 
+	 //需求：  写一个函数，传入两个数和一个运算符， 计算两个数相应运算的结果
+	 function jisuan( a,b,op){
+	  //算法。。。
+	   function add( a,b){
+	     return a+b;
+	   }
+	   function add1( a,b){
+	     return a-b;
+	   }
+	   function add2( a,b){
+	      return a*b;
+	   }
+	   if(op=="+"){
+		   return add(a,b);
+		}else if(op=="-"){
+	       return sub(a,b);
+		}else if(op=="*"){
+		   return mul(a,b);
+		}
+	}      //一个简单的算术使用这么多个function来完成，是为了封装算法，不便于别人使用，提高安全性；且便于自己管理代码
+	
+	document.write( jisuan(1,2,'+'));       //3
+	
+   </script>
+</body>
+</html>
