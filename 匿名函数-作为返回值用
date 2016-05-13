@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>匿名函数-作为返回值用</title>
+</head>
+
+<body>
+   <script type="text/javascript">
+       function a(){
+		  document.write("hello<br/>");
+		  return function(){
+		      document.write("bye bye<br/>");
+		  };       //此处得加一个；号，是因为return必须加；号（分号）
+		}
+		
+		/*var r=a();
+		 r();            //以上两行可以用一句代码完成   
+		 */
+		 a()();
+		 
+		 function a(){
+		  document.write("hello<br/>");
+		  return function(name){      //return返回值为function函数所运行的代码。    在此调用了name
+		      document.write("bye bye"+"<br/>"+name+"<br/>");
+		    };
+		 }
+		 
+		 a()("张三");
+		 
+   </script>
+</body>
+</html>
