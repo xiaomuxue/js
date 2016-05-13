@@ -1,0 +1,24 @@
+<head>
+<meta charset="utf-8">
+<title>匿名函数-自调用</title>
+</head>
+
+<body>
+   <script type="text/javascript">
+      //函数名（）；
+	  //代码（）；
+	  //(代码)（）；
+	  
+	  (function(){
+	      document.write("hello <br/>");
+	  })();
+	  
+	  //匿名自调用函数传参问题
+	  //  add(1,2)
+	  //  (代码)(1,2);
+	  (function(){
+	      document.write("hello"+arguments[0]+"<br/>");
+	  })('zy');      
+   </script>
+</body>
+</html>
