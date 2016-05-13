@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>匿名函数回调</title>
+</head>
+
+<body>
+   <script type="text/javascript">
+       //需求： 以指定的格式输出结果（将多个数字*2，）
+	   //方法一：有名字的函数，正常定义了个函数名show
+	   function show(arr){
+	     for(var i=0;i<arr.length;i++){
+		    document.write(  arr[i]+"<br/>");
+		}
+	  }           //就是以平常的方式输出来
+	  
+	  function show2(arr){
+	     document.write("<ul>");
+		 for(var i=0;i<arr.length;i++){
+		    document.write("<li>"+ arr[i]+"</li>");
+		}
+	    document.write("</ul>");
+	}              //以UL的形式输出来
+	
+	
+	  function jisuan(){
+		 //将1,2,3,4从arguments中取出，存到一个数组中，
+	     var arr=new Array();       //创建一个新的数组
+		 for(var i=0;i<arguments.length-1;i++){    //arguments.length-1是因为在调用jisuan时，它后面还会有一个例如show2的数，所以要把它减去
+		    arr[i]=arguments[i]*2;      //把原来的数乘以2
+		}
+		//再调用  show( 数组);
+		//判断arguments最后一个参数是否为  function
+		if( (typeof arguments[arguments.length-1]) =='function'){
+	        //在此处的做一下容错处理，判断一下类型
+			//show(arr);
+			arguments[arguments.length-1](arr);    //arguments[arguments.length-1]指的是代码，为激活代码  要加  （）；
+		}
+	}
+	
+	jisuan( 1,2,3,4, show2 );    //函数也是一种数据， 这里面写的是show,故传进去的是show函数的代码    要运行的话，使用show()    
+	//jisuan 里面的show2也可以改为show，那就会以正常的方式输出来。
+	
+	
+	//使用匿名函数
+	//var add=function(){}
+	jisuan( 1,2,3,4,  function ( arr){
+	   for(var i=0;i<arr.length;i++){
+	      document.write(  arr[i]+"<br/>"); 
+	   }
+	});
+	
+	jisuan(66,77,  function ( arr){
+       for(var i=0;i<arr.length;i++){
+		   document.write(  arr[i]+"<hr/>");
+		}
+	});
+	
+	jisuan(65,747,  function ( arr){
+	   document.write("<ul>");
+       for(var i=0;i<arr.length;i++){
+		   document.write( "<li>"+arr[i]+"</li>");
+		}
+		document.write("</ul>");
+	});
+	
+	//以上的写法易于维护和修改，想以哪种方式都容易修改。
+   </script>
+</body>
+</html>
